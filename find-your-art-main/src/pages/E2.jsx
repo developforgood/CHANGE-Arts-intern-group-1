@@ -20,8 +20,7 @@ import { ArrowBackIcon, CalendarIcon } from '@chakra-ui/icons';
 import vectorhoriz from '../assets/vector-horiz.png';
 import NavBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
-import { useUser } from '../components/UserContext';
-import LearningPlanDrawer from '../components/LearningPlanDrawer'
+// import LearningPlanDrawer from '../components/LearningPlanDrawer'
 
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
@@ -29,23 +28,19 @@ import { db } from '../../firebase';
 const MODE = import.meta.env.VITE_MODE;
 
 
-const fetchLessonPlanInfo = async (lessonPlanId) => {
-
-  const lessonPlanSnapshot = await getDoc(doc(db, 'lessonPlans', lessonPlanId));
-  if (!lessonPlanSnapshot.exists()) return;
-  const lessonPlanData = lessonPlanSnapshot.data();
-  const teacherId = lessonPlanData.teacherId;
-  const teacherSnapshot = await getDoc(doc(db, 'members', teacherId));
-  if (!teacherSnapshot.exists()) return;
-  return { ...lessonPlanData, creator: { ...teacherSnapshot.data() } }
-
+const fetchLessonPlanInfo = async (lessonPlan) => {
+  async () => {
+    const lessonPlanSnapshot = await getDoc(doc(db, 'lessonPlans', lessonPlanId));
+    if (!lessonPlanSnapshot.exists()) return;
+    const lessonPlanData = lessonPlanSnapshot.data();
+    const teacherId = lessonPlanData.teacherId;
+    const teacherSnapshot = await getDoc(doc(db, 'members', teacherId));
+    if (!teacherSnapshot.exists()) return;
+    return { ...lessonPlanData, creator: { ...teacherSnapshot } }
+  }
 }
 export default function EventDetails() {
-  const { id: eventId } = useParams();
-  const { user } = useUser();
-  const userId = user?.uid;
-
-
+  const { id } = useParams();
   const [data, setData] = useState();
   const [lessonPlans, setLessonPlans] = useState([]);
   const formattedDescription =
@@ -54,7 +49,7 @@ export default function EventDetails() {
   const fetchEventData = async () => {
     let event = new Object();
     if (MODE == 'prod') {
-      const docRef = doc(db, 'events', eventId);
+      const docRef = doc(db, 'events', id);
       const docSnapshot = await getDoc(docRef);
       if (!docSnapshot.exists()) {
         console.error('Failed to fetch event');
@@ -82,16 +77,15 @@ export default function EventDetails() {
       }
       const lessonPlans = [];
       (await Promise.all(lessonPlanRequestPromises)).forEach(lessonPlanInfo => {
-        console.log(lessonPlanInfo);
         if (lessonPlanInfo !== undefined) {
           lessonPlans.push(lessonPlanInfo)
         }
       });
+      console.log(lessonPlans);
       setLessonPlans(lessonPlans);
     };
     loadData();
   }, []);
-  console.log(lessonPlans);
 
   return (
     data && (
@@ -306,16 +300,13 @@ export default function EventDetails() {
               </Heading>
 
               <Text whiteSpace="pre-line">{formattedDescription}</Text>
-              <Heading as={'h1'} size="lg" mb={'1rem'} mt={'1.5rem'}>
+              <Heading as={'h1'} size="lg" mb={'1rem'} mt={'1rem'}>
                 Lesson Plans
               </Heading>
-              <Box mb={'1rem'}>
-                {lessonPlans.length>2 ? lessonPlans.map((lessonPlan, i) => {
-                  return <Card key={i}><CardBody>
-                    <Heading fontSize='xl'>{lessonPlan.title}</Heading>
-                    {lessonPlan.description}</CardBody></Card>
-                }) : <Text fontSize='xl'>No lesson plans found. Want to add one?</Text>}</Box>
-              <LearningPlanDrawer eventID={eventId} userId={userId} />
+              {lessonPlans.map((lessonPlan, i) => {
+                <Card><CardBody>{lessonPlan.description}</CardBody></Card>
+              })}
+              {/* <LearningPlanDrawer eventID={id}/> */}
               {/* Tags */}
               <Stack direction="row">
                 <Box>

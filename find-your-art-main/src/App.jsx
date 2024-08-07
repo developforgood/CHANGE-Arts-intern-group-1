@@ -9,6 +9,7 @@ import Partners from './pages/Partners';
 import CreateEvent from './pages/CreateEvent';
 import Maintenance from './pages/Maintenance';
 import EventDetails from './pages/EventDetails';
+import E2 from './pages/E2';
 import Profile from './pages/Profile';
 import { UserProvider } from './components/UserContext';
 import { APIProvider, Map, Marker } from '@vis.gl/react-google-maps';
@@ -27,6 +28,7 @@ function App() {
           <Route exact path="/partners" element={<Maintenance />} />
           <Route exact path="/create-event" element={<CreateEvent />} />
           <Route exact path="/events/:id" element={<EventDetails />} />
+          <Route exact path="/events2/:id" element={<E2 />} />
           <Route exact path="/profile" element={<Profile />} />
         </Routes>
       </UserProvider>

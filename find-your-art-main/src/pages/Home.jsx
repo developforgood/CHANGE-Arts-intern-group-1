@@ -27,7 +27,7 @@ import { AddIcon } from '@chakra-ui/icons';
 import { MdBuild, MdCall } from 'react-icons/md';
 import vector from '../assets/vector-horiz.png';
 import TypingText from '../components/TypingText';
-
+import { addLessonPlanToFirebase } from '../utils/lessonPlanUtils';
 import { collection, getDocs } from 'firebase/firestore';
 import { db, auth } from '../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -48,6 +48,14 @@ const originalGradientColors = [
   '#FF9EBC',
 ];
 
+const SAMPLE_EVENT_ID = "2LoOTlyy4lSlnvtw6exh";
+const SAMPLE_LESSON_PLAN_DATA = {
+  name: "test",
+  description: "testing description",
+  link: "https://example.com",
+  title: "CREATED AUTOMAGICALLY NOT MANUALLY",
+};
+
 const lightenColors = (colors, amount) => {
   return colors.map(color => tinycolor(color).lighten(amount).toHexString());
 };
@@ -55,12 +63,12 @@ const lightenColors = (colors, amount) => {
 const lightenedGradientColors = lightenColors(originalGradientColors, 10);
 
 const generateRandomEvents = (data, size) => {
-  const results = new Array();
-  while (results.length < size) {
-    let randomIndex = Math.floor(Math.random() * data.length) + 1;
-    if (results.indexOf(randomIndex) === -1) results.push(data[randomIndex]);
-  }
-  return results;
+  // const results = new Array();
+  // while (results.length < size) {
+  //   let randomIndex = Math.floor(Math.random() * data.length) + 1;
+  //   if (results.indexOf(randomIndex) === -1) results.push(data[randomIndex]);
+  // }
+  return data.slice(0,size);
 };
 
 export const gradient = `linear-gradient(to right, ${lightenedGradientColors.join(
@@ -87,6 +95,11 @@ const Home = () => {
 
   const navigate = useNavigate();
 
+
+  useEffect(()=>{
+    console.log("TESTING123 HELLO TESTING");
+    addLessonPlanToFirebase(SAMPLE_EVENT_ID, SAMPLE_LESSON_PLAN_DATA); // <-
+  },[]);
   const handleSearch = () => {
     if (
       initialQuery ||
@@ -306,13 +319,13 @@ const Home = () => {
             bg="rgba(100, 100, 100, 0.5)"
           >
             {/* Keyword */}
-            {/* <Heading 
-              textAlign={'center'} 
-              color="white" 
-              //textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)" 
+            {/* <Heading
+              textAlign={'center'}
+              color="white"
+              //textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
               mb="4"
               width="100%"
-              size="md"> 
+              size="md">
               Begin your search
             </Heading> */}
 
@@ -338,13 +351,13 @@ const Home = () => {
             </Box>
 
             {/* or */}
-            {/* <Text 
-              textAlign={'center'} 
-              color="white" 
+            {/* <Text
+              textAlign={'center'}
+              color="white"
               //textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
               mt="4"
               mb="2"
-              width="100%"> 
+              width="100%">
               or filter by category
             </Text> */}
 
@@ -403,13 +416,13 @@ const Home = () => {
             </Box>
 
             {/* or */}
-            {/* <Text 
-              textAlign={'center'} 
-              color="white" 
+            {/* <Text
+              textAlign={'center'}
+              color="white"
               //textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
               mt="4"
               mb="2"
-              width="100%"> 
+              width="100%">
               or set a date range
             </Text> */}
 
