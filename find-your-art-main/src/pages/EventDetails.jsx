@@ -310,7 +310,7 @@ export default function EventDetails() {
                 Lesson Plans
               </Heading>
               <Box mb={'1rem'}>
-                {lessonPlans.length>2 ? lessonPlans.map((lessonPlan, i) => {
+                {lessonPlans.length ? lessonPlans.map((lessonPlan, i) => {
                   return <Card key={i}><CardBody>
                     <Heading fontSize='xl'>{lessonPlan.title}</Heading>
                     {lessonPlan.description}</CardBody></Card>
