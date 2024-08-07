@@ -1,0 +1,153 @@
+{
+  "Visual Arts": {
+    "disciplines": [
+      "Painting",
+      "Drawing",
+      "Collage",
+      "2D/ Graphic Design",
+      "Illustration",
+      "Sculpture",
+      "Printmaking",
+      "Digital Media",
+      "Multimedia",
+      "Architecture"
+    ],
+    "styles": [
+      "Abstract Expressionism",
+      "Art Deco",
+      "Art Nouveau",
+      "Baroque",
+      "Bauhaus",
+      "Benin",
+      "Byzantine Art",
+      "Chicano Art",
+      "Conceptual Art",
+      "Contemporary Art",
+      "Cubism",
+      "Dadaism",
+      "Expressionism",
+      "Fauvism",
+      "Futurism",
+      "Gothic",
+      "Harlem Renaissance",
+      "Impressionism",
+      "Installation Art",
+      "Jazz Age",
+      "Kinetic Art",
+      "Ledger Art",
+      "Manga",
+      "Mannerism",
+      "Mexican Muralism",
+      "Neo-Classical",
+      "Op Art",
+      "Photo-Realism",
+      "Pointillism",
+      "Pop Art",
+      "Pre-Columbian Art",
+      "Prehistoric Art",
+      "Public Art",
+      "Raku",
+      "Renaissance",
+      "Representational Art",
+      "Rococo"
+    ]
+  },
+  "Media Arts": {
+    "disciplines": ["Film", "Television", "Animation"],
+    "styles": [
+      "Documentary",
+      "Narrative",
+      "Experimental",
+      "Comedy",
+      "Drama",
+      "Action/ Thriller",
+      "Animation",
+      "Musical"
+    ]
+  },
+  "Music": {
+    "disciplines": ["Vocal", "Instrumental"],
+    "styles": [
+      "Aboriginal Music",
+      "Native Central Music",
+      "South American Music",
+      "Native North American Music",
+      "Sami Music",
+      "West African Music",
+      "Central African Music",
+      "South African Music",
+      "Afro-Pop",
+      "Middle Eastern Music",
+      "Sufi Music",
+      "Arabic Classic Music",
+      "Contemporary Music",
+      "Pop Music",
+      "Hip-Hop",
+      "Indian Music",
+      "Tuva Music",
+      "Chinese Music",
+      "Japanese Music",
+      "Southeast Asia Music",
+      "Indonesia Music",
+      "Eurpoean Music",
+      "Jazz",
+      "Blues",
+      "Medieval Music",
+      "Renaissance",
+      "Baroque",
+      "Classical ",
+      "Romantic",
+      "Modernist",
+      "Post-Modern",
+      "Bluegrass",
+      "Appalachian Folk",
+      "Spirituals",
+      "LatinX Music"
+    ]
+  },
+  "Theatre": {
+    "disciplines": ["Musical Theatre", "Plays"],
+    "styles": [
+      "Abstract Realism",
+      "Classical",
+      "Commedia dell\u2019Arte",
+      "Comedy",
+      "Creative Drama",
+      "Devised Theatre",
+      "Documdrama",
+      "Experimental",
+      "Farce",
+      "Melodrama",
+      "Magical Realism",
+      "Realism",
+      "Asian Theatre",
+      "African Theatre",
+      "Tragedy",
+      "South American Theatre",
+      "Central American Theatre"
+    ]
+  },
+  "Dance": {
+    "disciplines": [
+      "Ballet",
+      "Contemporary",
+      "Hip-Hop",
+      "Jazz",
+      "Musical Theatre Dance",
+      "Modern",
+      "Tap",
+      "Swing"
+    ],
+    "styles": [
+      "Abstract",
+      "Contact Improvisation",
+      "Expressionism",
+      "Pedestrian Dance",
+      "Performance Art"
+    ]
+  },
+  "Opera": {
+    "disciplines": [],
+    "styles": []
+  }
+}
