@@ -1,20 +1,23 @@
 import { getDatabase, ref, push, update, set } from "firebase/database";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, addDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+
+// https://firebase.google.com/docs/firestore/manage-data/add-data
 
 /**
- * Adds lesson plan ID to the array of lesson plan IDs for the event object.
+ * Appends lesson plan ID to the array of lesson plan IDs for the event object.
  * @param {} eventID the ID of the event we are adding the lesson plan to
  * @param {*} lessonPlanID the ID of the lesson plan we are adding to the event
  */
-function addLessonPlanIDToEvent(eventID, lessonPlanID) {
-  //get existing event data. Look for event ID
-  const db = getDatabase();
-  const ref = ref(db, '/events/' + eventID);
+async function addLessonPlanIDToEvent(eventID, lessonPlanID) {
+  const db = getFirestore();
+  const ref = doc(db, 'events/', eventID);
   if (!ref) {
     console.error("Event not found! How possible??");
     return;
   }
-  ref.update({ lessonPlanIDs: firebase.database.ServerValue.arrayUnion([lessonPlanID]) });
+  await updateDoc(ref, {
+    lessonPlanIDs: arrayUnion(lessonPlanID),
+  });
 }
 
 /**
@@ -22,22 +25,12 @@ function addLessonPlanIDToEvent(eventID, lessonPlanID) {
  * @param {*} eventID the ID of the event we are attaching this to
  * @param {*} lessonPlanObject the actual lesson plan object. Contains title, teacher, description, link, etc...
  */
-export function addLessonPlanToFirebase(eventID, lessonPlanObject) {
-  console.log("ATTEMPTING TO DO SOMETGHING");
-  //add lesson plan object
-  const db = getDatabase();
-  set(ref(db, 'lessonPlans/'), {
-    lessonPlanObject,
-  })
-  .then((snapshot) => {
-      //attach lesson plan to event by adding its ID to the array of lesson plans for an event
-    addLessonPlanIDToEvent(eventID, snapshot.key);
-    console.log("write successful");
-    // Data saved successfully!
-  })
-  .catch((error) => {
-    // The write failed...
-    console.log('write failed');
-  });
-  console.log("jksdlhrajknasd");
+export async function addLessonPlanToFirebase(eventID, lessonPlanObject) {
+  //console.log("Adding lesson plan object to firebase. Event id and lesson plan object are " + eventID + " " + lessonPlanObject);
+  const db = getFirestore();
+
+  // Add a new document with an auto generated id, then attach it to its respective event.
+  const docRef = await addDoc(collection(db, "lessonPlans"), lessonPlanObject);
+  console.log("Document written with ID: ", docRef.id);
+  addLessonPlanIDToEvent(eventID, docRef.id);
 }

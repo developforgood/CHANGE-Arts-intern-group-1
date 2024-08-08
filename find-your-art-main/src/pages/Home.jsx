@@ -48,7 +48,8 @@ const originalGradientColors = [
   '#FF9EBC',
 ];
 
-const SAMPLE_EVENT_ID = "2LoOTlyy4lSlnvtw6exh";
+const SAMPLE_EVENT_ID = "KgVNBKHewJgBHX7nSgqm";
+//const SAMPLE_EVENT_ID = "THIS_ID_SHOULD_NOT_EXIST";
 const SAMPLE_LESSON_PLAN_DATA = {
   name: "test",
   description: "testing description",
