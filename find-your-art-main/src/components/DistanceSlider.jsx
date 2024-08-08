@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Slider,
   SliderMark,
@@ -6,15 +6,15 @@ import {
   SliderFilledTrack,
   Tooltip,
   SliderThumb,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export default function DistanceSlider({ onValueChange, color, initialValue }) {
   const [sliderValue, setSliderValue] = useState(
-    initialValue ? initialValue : 0,
+    initialValue ? initialValue : 0
   );
   const [showTooltip, setShowTooltip] = useState(false);
 
-  const handleSliderChange = newValue => {
+  const handleSliderChange = (newValue) => {
     setSliderValue(newValue);
     onValueChange(newValue);
   };
@@ -30,14 +30,15 @@ export default function DistanceSlider({ onValueChange, color, initialValue }) {
       onChange={handleSliderChange}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
+      display="inline-block"
     >
-      <SliderMark value={0} mt="1" ml="-2.5" fontSize="sm" color={'white'}>
+      <SliderMark value={0} mt="4" ml="-2.5" fontSize="sm" color={"white"}>
         Off
       </SliderMark>
-      <SliderMark value={50} mt="1" ml="-2.5" fontSize="sm" color={'white'}>
+      <SliderMark value={50} mt="4" ml="-2.5" fontSize="sm" color={"white"}>
         50
       </SliderMark>
-      <SliderMark value={100} mt="1" ml="-2.5" fontSize="sm" color={'white'}>
+      <SliderMark value={100} mt="4" ml="-2.5" fontSize="sm" color={"white"}>
         100
       </SliderMark>
       <SliderTrack>
@@ -45,7 +46,7 @@ export default function DistanceSlider({ onValueChange, color, initialValue }) {
       </SliderTrack>
       <Tooltip
         hasArrow
-        bg={'white'}
+        bg={"white"}
         color="black"
         placement="top"
         isOpen={showTooltip}

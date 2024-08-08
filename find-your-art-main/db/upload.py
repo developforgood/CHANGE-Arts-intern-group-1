@@ -26,6 +26,7 @@ with open('events.json', 'r') as file:
 
     for item in event_data:
         event = json.loads(item)
+        event["lesson_plan_ids"] = []
         db.collection("events").document(generate_id(20)).set(event)
 
 # Load categories data

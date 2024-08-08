@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Flex,
   FormControl,
@@ -16,49 +16,49 @@ import {
   Box,
   Select,
   Badge,
-} from '@chakra-ui/react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
-import { CiSearch } from 'react-icons/ci';
-import EventCard from '../components/EventCard';
-import NavigationBar from '../components/NavigationBar';
-import Footer from '../components/Footer';
-import tinycolor from 'tinycolor2';
-import { AddIcon } from '@chakra-ui/icons';
-import { MdBuild, MdCall } from 'react-icons/md';
-import vector from '../assets/vector-horiz.png';
-import TypingText from '../components/TypingText';
-import { addLessonPlanToFirebase } from '../utils/lessonPlanUtils';
-import { collection, getDocs } from 'firebase/firestore';
-import { db, auth } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-import eventsJSON from '../../db/events.json';
-import DistanceSlider from '../components/DistanceSlider';
+} from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { CiSearch } from "react-icons/ci";
+import EventCard from "../components/EventCard";
+import NavigationBar from "../components/NavigationBar";
+import Footer from "../components/Footer";
+import tinycolor from "tinycolor2";
+import { AddIcon } from "@chakra-ui/icons";
+import { MdBuild, MdCall } from "react-icons/md";
+import vector from "../assets/vector-horiz.png";
+import TypingText from "../components/TypingText";
+import { addLessonPlanToFirebase } from "../utils/lessonPlanUtils";
+import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import eventsJSON from "../../db/events.json";
+import DistanceSlider from "../components/DistanceSlider";
 
 const MODE = import.meta.env.VITE_MODE;
 
 const originalGradientColors = [
-  '#9285FF',
-  '#C5BEFF',
-  '#67D3EF',
-  '#73E3B4',
-  '#9EDE88',
-  '#FFE976',
-  '#FDC591',
-  '#FD86AB',
-  '#FF9EBC',
+  "#9285FF",
+  "#C5BEFF",
+  "#67D3EF",
+  "#73E3B4",
+  "#9EDE88",
+  "#FFE976",
+  "#FDC591",
+  "#FD86AB",
+  "#FF9EBC",
 ];
 
-const SAMPLE_EVENT_ID = "KgVNBKHewJgBHX7nSgqm";
-//const SAMPLE_EVENT_ID = "THIS_ID_SHOULD_NOT_EXIST";
-const SAMPLE_LESSON_PLAN_DATA = {
-  name: "test",
-  description: "testing description",
-  link: "https://example.com",
-  title: "CREATED AUTOMAGICALLY NOT MANUALLY",
-};
+// const SAMPLE_EVENT_ID = "KgVNBKHewJgBHX7nSgqm";
+// //const SAMPLE_EVENT_ID = "THIS_ID_SHOULD_NOT_EXIST";
+// const SAMPLE_LESSON_PLAN_DATA = {
+//   name: "test",
+//   description: "testing description",
+//   link: "https://example.com",
+//   title: "CREATED AUTOMAGICALLY NOT MANUALLY",
+// };
 
 const lightenColors = (colors, amount) => {
-  return colors.map(color => tinycolor(color).lighten(amount).toHexString());
+  return colors.map((color) => tinycolor(color).lighten(amount).toHexString());
 };
 
 const lightenedGradientColors = lightenColors(originalGradientColors, 10);
@@ -69,11 +69,11 @@ const generateRandomEvents = (data, size) => {
   //   let randomIndex = Math.floor(Math.random() * data.length) + 1;
   //   if (results.indexOf(randomIndex) === -1) results.push(data[randomIndex]);
   // }
-  return data.slice(0,size);
+  return data.slice(0, size);
 };
 
 export const gradient = `linear-gradient(to right, ${lightenedGradientColors.join(
-  ', ',
+  ", "
 )})`;
 
 const Home = () => {
@@ -82,10 +82,10 @@ const Home = () => {
   const [eventDB, setEventsDB] = useState([]);
   const [events, setEvents] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
-  const [initialQuery, setInitialQuery] = useState('');
-  const [attendanceType, setAttendanceType] = useState('');
-  const [initialCategory, setInitialCategory] = useState('');
-  const [initialAgeRange, setInitialAgeRange] = useState('');
+  const [initialQuery, setInitialQuery] = useState("");
+  const [attendanceType, setAttendanceType] = useState("");
+  const [initialCategory, setInitialCategory] = useState("");
+  const [initialAgeRange, setInitialAgeRange] = useState("");
   const [initialAgeMin, setInitialAgeMin] = useState(0);
   const [initialAgeMax, setInitialAgeMax] = useState(0);
   const [latitude, setLatitude] = useState(0);
@@ -96,11 +96,10 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-
-  useEffect(()=>{
-    console.log("TESTING123 HELLO TESTING");
-    addLessonPlanToFirebase(SAMPLE_EVENT_ID, SAMPLE_LESSON_PLAN_DATA); // <-
-  },[]);
+  // useEffect(()=>{
+  //   console.log("TESTING123 HELLO TESTING");
+  //   addLessonPlanToFirebase(SAMPLE_EVENT_ID, SAMPLE_LESSON_PLAN_DATA); // <-
+  // },[]);
   const handleSearch = () => {
     if (
       initialQuery ||
@@ -143,53 +142,53 @@ const Home = () => {
     }
   };
 
-  const handleAttendanceChange = e => {
+  const handleAttendanceChange = (e) => {
     setAttendanceType(e.target.value);
   };
 
-  const handleInitialCategoryChange = e => {
+  const handleInitialCategoryChange = (e) => {
     setInitialCategory(e.target.value);
   };
 
-  const handleInitialAgeRange = e => {
-    if (e.target.value === 'infant') {
-      setInitialAgeRange('infant');
+  const handleInitialAgeRange = (e) => {
+    if (e.target.value === "infant") {
+      setInitialAgeRange("infant");
       setInitialAgeMin(0);
       setInitialAgeMax(2);
-    } else if (e.target.value === 'prek') {
-      setInitialAgeRange('prek');
+    } else if (e.target.value === "prek") {
+      setInitialAgeRange("prek");
       setInitialAgeMin(3);
       setInitialAgeMax(5);
-    } else if (e.target.value === 'early-elem') {
-      setInitialAgeRange('early-elem');
+    } else if (e.target.value === "early-elem") {
+      setInitialAgeRange("early-elem");
       setInitialAgeMin(5);
       setInitialAgeMax(7);
-    } else if (e.target.value === 'upper-elem') {
-      setInitialAgeRange('upper-elem');
+    } else if (e.target.value === "upper-elem") {
+      setInitialAgeRange("upper-elem");
       setInitialAgeMin(8);
       setInitialAgeMax(10);
-    } else if (e.target.value === 'middle') {
-      setInitialAgeRange('middle');
+    } else if (e.target.value === "middle") {
+      setInitialAgeRange("middle");
       setInitialAgeMin(11);
       setInitialAgeMax(13);
-    } else if (e.target.value === 'early-high') {
-      setInitialAgeRange('early-high');
+    } else if (e.target.value === "early-high") {
+      setInitialAgeRange("early-high");
       setInitialAgeMin(14);
       setInitialAgeMax(16);
-    } else if (e.target.value === 'upper-high') {
-      setInitialAgeRange('upper-high');
+    } else if (e.target.value === "upper-high") {
+      setInitialAgeRange("upper-high");
       setInitialAgeMin(16);
       setInitialAgeMax(18);
-    } else if (e.target.value === 'college') {
-      setInitialAgeRange('college');
+    } else if (e.target.value === "college") {
+      setInitialAgeRange("college");
       setInitialAgeMin(18);
       setInitialAgeMax(21);
-    } else if (e.target.value === 'family') {
-      setInitialAgeRange('family');
+    } else if (e.target.value === "family") {
+      setInitialAgeRange("family");
       setInitialAgeMin(0);
       setInitialAgeMax(21);
-    } else if (e.target.value === 'adult') {
-      setInitialAgeRange('adult');
+    } else if (e.target.value === "adult") {
+      setInitialAgeRange("adult");
       setInitialAgeMin(21);
       setInitialAgeMax(21);
     } else {
@@ -198,19 +197,19 @@ const Home = () => {
     }
   };
 
-  const handleStartChange = e => {
+  const handleStartChange = (e) => {
     setInitialStartDate(e.target.value);
   };
 
-  const handleEndChange = e => {
+  const handleEndChange = (e) => {
     setInitialEndDate(e.target.value);
   };
 
   const fetchData = async () => {
     let data = new Array();
-    if (MODE == 'prod') {
-      await getDocs(collection(db, 'events')).then(querySnapshot => {
-        data = querySnapshot.docs.map(doc => ({
+    if (MODE == "prod") {
+      await getDocs(collection(db, "events")).then((querySnapshot) => {
+        data = querySnapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
@@ -240,7 +239,7 @@ const Home = () => {
   }, [eventDB, user, loading]);
 
   useEffect(() => {
-    if ('geolocation' in navigator) {
+    if ("geolocation" in navigator) {
       // Request the user's location
       navigator.geolocation.getCurrentPosition(
         // Success callback
@@ -254,22 +253,22 @@ const Home = () => {
         function (error) {
           switch (error.code) {
             case error.PERMISSION_DENIED:
-              console.error('User denied the request for Geolocation.');
+              console.error("User denied the request for Geolocation.");
               break;
             case error.POSITION_UNAVAILABLE:
-              console.error('Location information is unavailable.');
+              console.error("Location information is unavailable.");
               break;
             case error.TIMEOUT:
-              console.error('The request to get user location timed out.');
+              console.error("The request to get user location timed out.");
               break;
             case error.UNKNOWN_ERROR:
-              console.error('An unknown error occurred.');
+              console.error("An unknown error occurred.");
               break;
           }
-        },
+        }
       );
     } else {
-      console.error('Geolocation is not supported by this browser.');
+      console.error("Geolocation is not supported by this browser.");
     }
   }, []);
 
@@ -279,16 +278,18 @@ const Home = () => {
         <NavigationBar />
 
         <Flex
-          direction={'row'}
-          height={'580px'}
-          width={'auto'}
+          direction={"row"}
+          height={"580px"}
+          width={"auto"}
           // background={"#7c70e1"}
-          justify={'center'}
-          align={'center'}
+          justify={"center"}
+          align={"center"}
           backgroundImage={vector}
           backgroundSize="cover"
+          backgroundColor={"rgba(0,0,0,0.3)"}
+          backgroundBlendMode={"overlay"}
         >
-          <Flex direction={'column'} ml="16">
+          <Flex direction={"column"} ml="16">
             {/* Find Your Art */}
             <TypingText text="Find Your Art." delayBetweenChars={300} />
 
@@ -297,8 +298,8 @@ const Home = () => {
               fontSize="2xl"
               color="white"
               whiteSpace="pre-line"
-              font={'DM Sans'}
-              maxW={'70%'}
+              font={"DM Sans"}
+              maxW={"70%"}
               // textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
             >
               Search for the arts events that best complement your classroom or
@@ -308,16 +309,15 @@ const Home = () => {
 
           {/* Search Functionality */}
           <Flex
-            direction={'column'}
+            direction={"column"}
             maxW="47%"
             mr="16"
-            justify={'center'}
-            align={'center'}
-            //border="1px solid white"
+            justify={"center"}
+            align={"center"}
             borderRadius="md"
-            p="16"
-            boxShadow={'lg'}
-            bg="rgba(100, 100, 100, 0.5)"
+            p="2rem"
+            boxShadow={"lg"}
+            bg="gray.700"
           >
             {/* Keyword */}
             {/* <Heading
@@ -332,20 +332,19 @@ const Home = () => {
 
             {/* Search Bar */}
             <Box mb="4" width="100%">
-              <Flex direction="column">
+              <Flex direction="column" p=".5rem 0">
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <CiSearch color="white" />
                   </InputLeftElement>
                   <Input
-                    //background={'white.100'}
                     color="white"
-                    variant="flushed"
                     placeholder="What are you looking for today?"
-                    _placeholder={{ opacity: 0.5, color: 'white' }}
+                    _placeholder={{ opacity: 1, color: "white" }}
                     value={initialQuery}
-                    onChange={e => setInitialQuery(e.target.value)}
+                    onChange={(e) => setInitialQuery(e.target.value)}
                     width="600px"
+                    variant="flushed"
                   />
                 </InputGroup>
               </Flex>
@@ -363,7 +362,7 @@ const Home = () => {
             </Text> */}
 
             {/* Dropdown menus*/}
-            <Box mt="4" mb="8" width="100%">
+            <Box mb="8" width="100%">
               <Flex>
                 <Select
                   color="white"
@@ -431,7 +430,7 @@ const Home = () => {
               {/* Start Date Field */}
               <FormControl isDisabled>
                 <FormLabel color="white">
-                  Start Date <Badge>Coming Soon!</Badge>{' '}
+                  Start Date <Badge>Coming Soon!</Badge>{" "}
                 </FormLabel>
                 <Input
                   type="date"
@@ -445,7 +444,7 @@ const Home = () => {
               {/* End Date Field */}
               <FormControl ml={4} isDisabled>
                 <FormLabel color="white">
-                  End Date <Badge>Coming Soon!</Badge>{' '}
+                  End Date <Badge>Coming Soon!</Badge>{" "}
                 </FormLabel>
                 <Input
                   type="date"
@@ -458,53 +457,55 @@ const Home = () => {
             </Flex>
 
             {/* Distance */}
-            <Text color="white" mt="8">
-              Distance
-            </Text>
-            <DistanceSlider
-              color="gray"
-              onValueChange={distance => {
-                setInitialDistance(distance);
-              }}
-              initialValue={initialDistance}
-            />
-
+            <Flex width={"100%"} gap={"4rem"} alignItems={"center"} mt="2rem">
+              <Text color="white">Distance</Text>
+              <Box flexGrow={1}>
+                <DistanceSlider
+                  color="white"
+                  onValueChange={(distance) => {
+                    setInitialDistance(distance);
+                  }}
+                  initialValue={initialDistance}
+                />
+              </Box>
+            </Flex>
             {/* Search */}
             <Button
-              mt="8"
+              mt="3rem"
               variant="outline"
               color="white"
               size="md"
-              fontWeight={'bold'}
+              fontWeight={"bold"}
               width="100%"
               onClick={handleSearch}
+              _hover={{ bg: "gray.800" }}
+              _active={{ bg: "gray.800" }}
             >
               Enter
             </Button>
           </Flex>
         </Flex>
+        <Box m="4rem">
+          <Heading fontSize="25px" fontWeight={500}>
+            Popular services
+          </Heading>
 
-        <Heading fontSize="25px" ml="4" mt="8" fontWeight={500}>
-          Popular services
-        </Heading>
-
-        {/* Card Section */}
-        <Flex direction="column" align="center" mt="4">
-          <Flex wrap="wrap" justify="center">
+          {/* Card Section */}
+          <Flex wrap="wrap" justify="left" mt="1rem" gap="1rem">
             {events.length > 0 &&
               events.map((event, id) => <EventCard key={id} {...event} />)}
           </Flex>
-        </Flex>
+        </Box>
 
         {user && (
           <IconButton
             colorScheme="green"
             isRound={true}
-            height={'7rem'}
-            width={'7rem'}
-            position={'fixed'}
-            bottom={'7rem'}
-            right={'5rem'}
+            height={"5rem"}
+            width={"5rem"}
+            position={"fixed"}
+            bottom={"10%"}
+            right={"5%"}
             icon={<AddIcon boxSize={10} />}
             as={RouterLink}
             to="/create-event"

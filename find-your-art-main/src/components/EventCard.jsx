@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Stack,
   Image,
@@ -19,12 +19,12 @@ import {
   AlertDialogCloseButton,
   useDisclosure,
   Badge,
-} from '@chakra-ui/react';
-import { Card, CardBody } from '@chakra-ui/react';
-import noimage from '../assets/no-image.png';
+} from "@chakra-ui/react";
+import { Card, CardBody } from "@chakra-ui/react";
+import noimage from "../assets/no-image.png";
 
-import { auth } from '../../firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from "../../firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const MAX_TITLE_LENGTH = 50;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -47,53 +47,53 @@ export default function EventCard(props) {
   let imageURL = props.imageURL;
   let address = props.address;
   let city = address
-    ?.split(',')
+    ?.split(",")
     .slice(-2)
-    .join(',')
-    .split(' ')
+    .join(",")
+    .split(" ")
     .slice(0, -1)
-    .join(' ')
+    .join(" ")
     .trim();
   let attendance_types = props.location_types;
   let minAge = props.min_age;
   let maxAge = props.max_age;
 
-  const formatDateToMMDDYY = date => {
+  const formatDateToMMDDYY = (date) => {
     if (!date) {
-      return 'N/A';
+      return "N/A";
     }
     const dateObj = Date.parse(date);
-    const options = { year: '2-digit', month: '2-digit', day: '2-digit' };
-    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const options = { year: "2-digit", month: "2-digit", day: "2-digit" };
+    const formatter = new Intl.DateTimeFormat("en-US", options);
     const formattedDate = formatter.format(dateObj);
 
     return formattedDate;
   };
 
-  const formatDateToEnglish = date => {
+  const formatDateToEnglish = (date) => {
     if (!date) {
-      return 'N/A';
+      return "N/A";
     }
 
     const dateObj = new Date(date);
 
     const day = dateObj.getDate();
-    const month = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(
-      dateObj,
+    const month = new Intl.DateTimeFormat("en-US", { month: "long" }).format(
+      dateObj
     );
     const year = dateObj.getFullYear();
 
-    const ordinalSuffix = day => {
-      if (day > 3 && day < 21) return 'th';
+    const ordinalSuffix = (day) => {
+      if (day > 3 && day < 21) return "th";
       switch (day % 10) {
         case 1:
-          return 'st';
+          return "st";
         case 2:
-          return 'nd';
+          return "nd";
         case 3:
-          return 'rd';
+          return "rd";
         default:
-          return 'th';
+          return "th";
       }
     };
 
@@ -113,30 +113,37 @@ export default function EventCard(props) {
   }
 
   return (
-    <Card maxW="16rem" maxH="30rem" m="2">
+    <Card
+      maxW="16rem"
+      maxH="30rem"
+      flexGrow={1}
+      flexShrink={1}
+      borderWidth={"1px"}
+      borderColor={"gray.200"}
+    >
       <CardBody>
         <div
           style={{
-            width: '100%',
-            height: '8rem',
-            overflow: 'hidden',
-            borderRadius: '0.5rem',
+            width: "100%",
+            height: "8rem",
+            overflow: "hidden",
+            borderRadius: "0.5rem",
           }}
         >
           <Image
             src={imageURL ? imageURL : noimage}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
         </div>
         <Stack mt="6" spacing="1">
           <Heading size="md">
-            {title ? truncatedTitle : 'Name of Event'}
+            {title ? truncatedTitle : "Name of Event"}
           </Heading>
-          <Text color={'#7B61FF'} fontSize={'12'}>
-            {startDate ? `${formatDateToMMDDYY(startDate)}` : ''}
+          <Text color={"#7B61FF"} fontSize={"12"}>
+            {startDate ? `${formatDateToMMDDYY(startDate)}` : ""}
             {endDate && endDate != startDate
               ? ` - ${formatDateToMMDDYY(endDate)} `
-              : ''}
+              : ""}
             {endDate && isWithinXDays(endDate, 3) && (
               <Badge colorScheme="orange" ml="1">
                 Ending Soon!
@@ -149,8 +156,8 @@ export default function EventCard(props) {
               </Badge>
             )}
           </Text>
-          <Text>{organizer ? organizer : 'Teaching Artist Name'}</Text>
-          {address && <Text fontSize={'12'}>{city}</Text>}
+          <Text>{organizer ? organizer : "Teaching Artist Name"}</Text>
+          {address && <Text fontSize={"12"}>{city}</Text>}
           <Stack direction="row" wrap="wrap">
             {/* {address && address.length > 0 && <Tag size='sm' colorScheme='pink' borderRadius='full'>{city}</Tag>} */}
             {attendance_types &&
@@ -161,7 +168,7 @@ export default function EventCard(props) {
                   colorScheme="purple"
                   borderRadius="full"
                 >
-                  {type === 'virtual' ? 'Virtual' : 'In-person'}
+                  {type === "virtual" ? "Virtual" : "In-person"}
                 </Tag>
               ))}
             {category && (
@@ -176,15 +183,15 @@ export default function EventCard(props) {
             ) : (
               <Tag size="sm" colorScheme="orange" borderRadius="full" mr={2}>
                 <TagLabel>
-                  Ages {minAge === '' ? '0' : minAge}
-                  {maxAge >= 21 ? '+' : ` - ${maxAge}`}
+                  Ages {minAge === "" ? "0" : minAge}
+                  {maxAge >= 21 ? "+" : ` - ${maxAge}`}
                 </TagLabel>
               </Tag>
             )}
           </Stack>
         </Stack>
       </CardBody>
-      <CardFooter justifyContent={'center'}>
+      <CardFooter justifyContent={"center"}>
         {user ? (
           <Link onClick={() => navigate(`/events/${props.id}`)}>
             <Button colorScheme="blue" variant="ghost">
@@ -213,7 +220,7 @@ export default function EventCard(props) {
                   <AlertDialogFooter>
                     <Button
                       colorScheme="blue"
-                      onClick={() => navigate('/login')}
+                      onClick={() => navigate("/login")}
                       ml={3}
                     >
                       Take me to log in

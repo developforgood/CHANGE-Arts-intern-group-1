@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Text, Flex } from '@chakra-ui/react';
+import { useState, useEffect } from "react";
+import { Text, Flex } from "@chakra-ui/react";
 
 const TypingText = ({ text, delayBetweenChars }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,7 +10,7 @@ const TypingText = ({ text, delayBetweenChars }) => {
     const animation = async () => {
       for (let i = 0; i < text.length; i++) {
         setCurrentIndex(i);
-        await new Promise(resolve => setTimeout(resolve, delayBetweenChars));
+        await new Promise((resolve) => setTimeout(resolve, delayBetweenChars));
       }
     };
 
@@ -33,6 +33,7 @@ const TypingText = ({ text, delayBetweenChars }) => {
         color="white"
         whiteSpace="pre-line"
         font="DM Sans"
+        fontWeight={800}
         mb="4"
         //textShadow="2px 2px 4px rgba(0, 0, 0, 0.5)"
       >
