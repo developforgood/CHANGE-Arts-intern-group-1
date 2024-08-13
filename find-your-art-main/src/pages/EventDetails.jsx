@@ -15,6 +15,7 @@ import {
   Stack,
   Tag,
   TagLabel,
+  Grid,
 } from "@chakra-ui/react";
 import { ArrowBackIcon, CalendarIcon } from "@chakra-ui/icons";
 import vectorhoriz from "../assets/vector-horiz.png";
@@ -22,6 +23,7 @@ import NavBar from "../components/NavigationBar";
 import Footer from "../components/Footer";
 import { useUser } from "../components/UserContext";
 import LearningPlanDrawer from "../components/LearningPlanDrawer";
+import { LinkIcon } from "@chakra-ui/icons";
 
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase";
@@ -179,18 +181,30 @@ export default function EventDetails() {
                           <TagLabel>{data.style}</TagLabel>
                         </Tag>
                       )}
-                      {data.min_age === 0 && data.max_age === 100 ? (
-                        <Tag size="lg" colorScheme="orange" borderRadius="full">
-                          <TagLabel>All Ages</TagLabel>
-                        </Tag>
-                      ) : (
-                        <Tag size="lg" colorScheme="orange" borderRadius="full">
-                          <TagLabel>
-                            Ages {data.min_age === "" ? "0" : data.min_age}
-                            {data.max_age === 100 ? "+" : ` - ${data.max_age}`}
-                          </TagLabel>
-                        </Tag>
-                      )}
+                      {data.min_age !== undefined &&
+                        data.max_age !== undefined &&
+                        (data.min_age === 0 && data.max_age === 100 ? (
+                          <Tag
+                            size="lg"
+                            colorScheme="orange"
+                            borderRadius="full"
+                          >
+                            <TagLabel>All Ages</TagLabel>
+                          </Tag>
+                        ) : (
+                          <Tag
+                            size="lg"
+                            colorScheme="orange"
+                            borderRadius="full"
+                          >
+                            <TagLabel>
+                              Ages {data.min_age === "" ? "0" : data.min_age}
+                              {data.max_age === 100
+                                ? "+"
+                                : ` - ${data.max_age}`}
+                            </TagLabel>
+                          </Tag>
+                        ))}
                       {data.location_types.includes("virtual") && (
                         <Tag size="lg" colorScheme="purple" borderRadius="full">
                           <TagLabel>Virtual</TagLabel>
@@ -310,8 +324,13 @@ export default function EventDetails() {
               <Heading as={"h1"} size="lg" mb={"1rem"} mt={"1.5rem"}>
                 Lesson Plans
               </Heading>
-              <Box mb="1rem" maxWidth="2xl">
-                <Flex flexDir="column" gap="1rem">
+              <Box mb="1rem">
+                <Grid
+                  flexDir="row"
+                  gap="1rem"
+                  wrap={"wrap"}
+                  gridTemplateColumns={"1fr 1fr"}
+                >
                   {lessonPlans.length ? (
                     lessonPlans.map((lessonPlan, i) => {
                       return (
@@ -327,15 +346,22 @@ export default function EventDetails() {
                                 fontSize="xl"
                                 mb={".4rem"}
                                 color={"blue.400"}
+                                display={"inline"}
                               >
                                 {lessonPlan.title || "Untitled Lesson Plan"}
                               </Heading>
+                              <LinkIcon
+                                display={"inline"}
+                                verticalAlign={"baseline"}
+                                marginLeft={"10px"}
+                              />
                             </a>
                             <Flex
                               height={"1rem"}
                               gap={".3rem"}
                               alignItems={"center"}
                               mb={"1rem"}
+                              mt=".5rem"
                             >
                               <Image src={userIcon} height={"100%"} />
                               <Text>
@@ -354,28 +380,30 @@ export default function EventDetails() {
                       No lesson plans found. Want to add one?
                     </Text>
                   )}
-                </Flex>
+                </Grid>
               </Box>
               <LearningPlanDrawer eventId={eventId} userId={userId} />
               {/* Tags */}
               <Stack direction="row">
                 <Box>
-                  <Heading as={"h4"} size={"sm"} mb={"1rem"} mt={"2rem"}>
+                  <Heading as={"h4"} size={"lg"} mb={"1rem"} mt={"2rem"}>
                     Tags
                   </Heading>
                   <Stack direction={"row"}>
-                    {data.tags
-                      .filter((tag) => tag.trim() !== "")
-                      .map((tag, index) => (
-                        <Tag
-                          size="lg"
-                          colorScheme="blue"
-                          borderRadius="full"
-                          key={index}
-                        >
-                          {tag}
-                        </Tag>
-                      ))}
+                    {data.tags.length
+                      ? data.tags
+                          .filter((tag) => tag.trim() !== "")
+                          .map((tag, index) => (
+                            <Tag
+                              size="lg"
+                              colorScheme="blue"
+                              borderRadius="full"
+                              key={index}
+                            >
+                              {tag}
+                            </Tag>
+                          ))
+                      : "No Tags"}
                   </Stack>
                 </Box>
               </Stack>
@@ -383,7 +411,7 @@ export default function EventDetails() {
               {/* Content Warnings */}
               <Stack direction="row">
                 <Box>
-                  <Heading as={"h4"} size={"sm"} mb={"1rem"} mt={"2rem"}>
+                  <Heading as={"h1"} size={"lg"} mb={"1rem"} mt={"2rem"}>
                     Content Warnings
                   </Heading>
                   <Stack direction={"row"}>

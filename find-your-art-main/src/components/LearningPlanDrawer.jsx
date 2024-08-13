@@ -25,7 +25,7 @@ export default function LearningPlanDrawer({ eventId, userId }) {
   const [lpName, setLPName] = useState(""); // name of lesson plan
   const [lpDescrip, setLPDescrip] = useState(""); // description of lesson plan
   const [lpLink, setLPLink] = useState(""); // link to lesson plan document
-
+  console.log(lpName, lpDescrip, lpLink);
   const navigate = useNavigate();
   const refreshPage = () => {
     navigate(0);
@@ -48,8 +48,8 @@ export default function LearningPlanDrawer({ eventId, userId }) {
         ref={btnRef}
         colorScheme="green"
         onClick={onOpen}
-        size="sm"
-        width="150px"
+        size="lg"
+        width="fit-content"
         rightIcon={<ArrowForwardIcon />}
         variant="outline"
       >
@@ -93,7 +93,7 @@ function InputField({ title, setter }) {
 
   const handleChange = (event) => {
     setInputValue(event.target.value);
-    setter(inputValue);
+    setter(event.target.value);
   };
 
   return (

@@ -499,14 +499,14 @@ const Home = () => {
 
         {user && (
           <IconButton
-            colorScheme="green"
+            colorScheme="teal"
             isRound={true}
             height={"5rem"}
             width={"5rem"}
             position={"fixed"}
             bottom={"10%"}
             right={"5%"}
-            icon={<AddIcon boxSize={10} />}
+            icon={<AddIcon boxSize={7} />}
             as={RouterLink}
             to="/create-event"
           />

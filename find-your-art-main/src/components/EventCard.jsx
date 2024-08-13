@@ -111,7 +111,6 @@ export default function EventCard(props) {
     const today = new Date();
     return new Date(endDate) < today;
   }
-
   return (
     <Card
       maxW="16rem"
@@ -176,18 +175,20 @@ export default function EventCard(props) {
                 {category}
               </Tag>
             )}
-            {minAge === 0 && maxAge >= 21 ? (
-              <Tag size="sm" colorScheme="orange" borderRadius="full" mr={2}>
-                <TagLabel>All Ages</TagLabel>
-              </Tag>
-            ) : (
-              <Tag size="sm" colorScheme="orange" borderRadius="full" mr={2}>
-                <TagLabel>
-                  Ages {minAge === "" ? "0" : minAge}
-                  {maxAge >= 21 ? "+" : ` - ${maxAge}`}
-                </TagLabel>
-              </Tag>
-            )}
+            {minAge !== undefined &&
+              maxAge !== undefined &&
+              (minAge === 0 && maxAge >= 21 ? (
+                <Tag size="sm" colorScheme="orange" borderRadius="full" mr={2}>
+                  <TagLabel>All Ages</TagLabel>
+                </Tag>
+              ) : (
+                <Tag size="sm" colorScheme="orange" borderRadius="full" mr={2}>
+                  <TagLabel>
+                    Ages {minAge === "" ? "0" : minAge}
+                    {maxAge >= 21 ? "+" : ` - ${maxAge}`}
+                  </TagLabel>
+                </Tag>
+              ))}
           </Stack>
         </Stack>
       </CardBody>
